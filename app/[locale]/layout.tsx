@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { notFound } from "next/navigation";
 import { LOCALES, isLocale, type Locale } from "@/content/types";
 import { t } from "@/content/i18n";
@@ -10,22 +9,17 @@ import { CartDrawer } from "@/components/cart/CartDrawer";
 import "../globals.css";
 
 /**
- * Hər iki şrift latin-ext (Azərbaycan ə, ğ, ı, ş) və cyrillic (rus) altçoxluqlarını
- * daşıyır. Altçoxluqlar burada açıq göstərilir, çünki standart dəst yalnız latin-dir.
+ * Şriftlər layihənin içindən verilir (fontsource), build zamanı Google Fonts-a sorğu getmir.
+ * Əvvəl next/font/google işlənirdi, Vercel-in build mühitində o sorğu uğursuz ola bilirdi.
+ *
+ * Hər paket latin, latin-ext (Azərbaycan ə, ğ, ı, ş) və cyrillic (rus) altçoxluqlarını
+ * unicode-range ilə daşıyır: brauzer yalnız səhifədə lazım olan fayllı yükləyir.
+ * Şrift adları app/globals.css-dəki @theme blokunda istifadə olunur.
  */
-const display = Cormorant_Garamond({
-  subsets: ["latin", "latin-ext", "cyrillic"],
-  weight: ["300", "400", "500"],
-  variable: "--font-cormorant",
-  display: "swap",
-});
-
-const sans = Manrope({
-  subsets: ["latin", "latin-ext", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-manrope",
-  display: "swap",
-});
+import "@fontsource-variable/manrope"; // 200-800, dəyişən şrift
+import "@fontsource/cormorant-garamond/300.css";
+import "@fontsource/cormorant-garamond/400.css";
+import "@fontsource/cormorant-garamond/500.css";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -78,7 +72,6 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${display.variable} ${sans.variable}`}
       suppressHydrationWarning
     >
       {/* Brauzer əlavələri body-yə atribut yazır (məs. data-smart-converter-loaded), bu uyğunsuzluq xətası verməsin. */}

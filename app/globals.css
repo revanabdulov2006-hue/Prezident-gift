@@ -17,8 +17,8 @@
   --color-line-strong: rgb(255 255 255 / 0.16);
 
   /* --- Şrift ---------------------------------------------------------- */
-  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
 
   /* --- Keçid əyriləri -------------------------------------------------- */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
